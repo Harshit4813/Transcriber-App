@@ -1,5 +1,15 @@
 import streamlit as st
-# Custom CSS + JS Styling
+import os
+import requests
+from zipfile import ZipFile
+import yt_dlp
+from time import sleep
+import uuid
+import datetime
+
+# =====================================================
+#  Custom CSS + JS Styling
+# =====================================================
 def local_css():
     st.markdown("""
        <style>
@@ -91,9 +101,8 @@ section[data-testid="stSidebar"] label {
     box-shadow: 0px 0px 25px rgba(0, 198, 255, 1);
 }
 </style>
-
-
     """, unsafe_allow_html=True)
+
 
 def local_js():
     st.markdown("""
@@ -111,35 +120,19 @@ def local_js():
         </script>
     """, unsafe_allow_html=True)
 
-# -----------------------------
-# Imports
-# -----------------------------
-import os
-import requests
-from zipfile import ZipFile
-import yt_dlp
-from time import sleep
-import uuid
-import datetime
 
-# -----------------------------
-# Utils
-# -----------------------------
+# =====================================================
+#  Utility Functions
+# =====================================================
 def get_unique_filename(base, ext):
+    """Generate unique filenames with timestamp + UUID"""
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     return f"{base}_{timestamp}_{uuid.uuid4().hex[:6]}.{ext}"
 
-# -----------------------------
-# UI
-# -----------------------------
-st.markdown('# 📝 **Transcriber App**')
-local_css()
-local_js()
-bar = st.progress(0)
 
-# -----------------------------
-# 1. Download YouTube audio
-# -----------------------------
+# =====================================================
+#  YouTube Audio Downloader
+# =====================================================
 def get_yt(URL):
     try:
         output_template = get_unique_filename("yt_audio", "%(ext)s")
@@ -161,9 +154,10 @@ def get_yt(URL):
         st.error(f"❌ Error downloading YouTube audio: {e}")
         return None
 
-# -----------------------------
-# 2. Upload to AssemblyAI + Transcribe
-# -----------------------------
+
+# =====================================================
+#  AssemblyAI Transcription
+# =====================================================
 def transcribe_yt(filename):
     bar.progress(20)
 
@@ -175,7 +169,7 @@ def transcribe_yt(filename):
                     break
                 yield data
 
-    # Upload
+    # Upload audio
     headers = {'authorization': api_key}
     response = requests.post(
         'https://api.assemblyai.com/v2/upload',
@@ -218,11 +212,11 @@ def transcribe_yt(filename):
     bar.progress(100)
 
     # Show transcript
-    st.header('Output')
+    st.header('📝 Transcription Output')
     text = transcript_output_response.json()["text"]
     st.success(text)
 
-    # Save unique files
+    # Save files
     txt_file = get_unique_filename("transcript", "txt")
     srt_file = get_unique_filename("transcript", "srt")
     zip_file_name = get_unique_filename("transcription", "zip")
@@ -241,17 +235,23 @@ def transcribe_yt(filename):
 
     return zip_file_name
 
-# -----------------------------
-# 3. The App
-# -----------------------------
-api_key = st.secrets['api_key']  # put your API key in .streamlit/secrets.toml
+
+# =====================================================
+#  Streamlit UI
+# =====================================================
+st.markdown('# 🎧 **YouTube Transcriber App**')
+local_css()
+local_js()
+bar = st.progress(0)
+
+api_key = st.secrets['api_key']  # API key stored in .streamlit/secrets.toml
 st.warning('👉 Enter a YouTube URL in the sidebar to start.')
 
 # Sidebar
 st.sidebar.header('Input parameter')
 with st.sidebar.form(key='my_form'):
     URL = st.text_input('Enter URL of YouTube video:')
-    submit_button = st.form_submit_button(label='Go')
+    submit_button = st.form_submit_button(label='Transcribe')
 
 # Run pipeline
 if submit_button:

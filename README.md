@@ -1,55 +1,104 @@
-# transcriber-app
+# 🎙️ Transcriber App  
 
-# Watch the tutorial video
+A modern and stylish **audio & video transcription tool** built with **Python** and **Streamlit**.  
+This app lets you download audio from YouTube or upload your own files, and then generates accurate **transcripts & subtitles** in `.txt` and `.srt` formats.  
 
-[How to build your own Speech-to-Text Transcription App in Python using AssemblyAI](https://youtu.be/Kj0JtjAxxKA)
+---
+## 📸 App Preview  
 
-<a href="https://youtu.be/NNq_XBVk30w"><img src="http://img.youtube.com/vi/NNq_XBVk30w/maxresdefault.jpg" alt="How to build your own Speech-to-Text Transcription App in Python using AssemblyAI" title="How to build your own Speech-to-Text Transcription App in Python using AssemblyAI" width="500" /></a>
+<p align="center">
+  <img src="Transcriberpic.png" alt="App Screenshot" width="800"/>
+</p>
 
-# 1. Obtain the AssemblyAI API key
 
-Obtain your free [AssemblyAI API key](https://www.assemblyai.com/?utm_source=youtube&utm_medium=social&utm_campaign=dataprofessor).
+## ✨ Features  
 
-# 2. Running transcriber as command line tool
+- 🎥 **YouTube Downloader** – extract audio from YouTube videos and shorts  
+- 🎧 **Audio Upload** – upload `.mp3` or `.wav` files  
+- 📝 **Transcription** – generate clean transcripts from speech  
+- ⏱️ **Subtitle Export** – save transcripts as `.srt` or `.txt`  
+- 🎨 **Modern Dark UI** – custom CSS styling for Streamlit  
+- ⚡ **Lightweight** – no complex setup, runs locally in your browser  
 
-Firstly, copy and paste the AssemblyAI API key into the `api.txt` file (you can replace the text `replace_with_your_AssemblyAI_API_key` with your own API key).
+---
 
-Secondly, install prerequisite `pytube` library by typing the following:
-```
-pip3 install pytube
-```
+## 🚀 Getting Started  
 
-Thirdly, run the transcriber by typing the following (note that you can replace the URL with a YouTube video of your choice):
-```
-python3 transcriber.py -i "https://youtu.be/mkVjrB8g6mM"
-```
+Follow these steps to set up and run the project locally:  
 
-# 3. Running transcriber as a Streamlit app
-To recreate this web app on your own computer, do the following.
-
-### Create conda environment (Optional)
-Firstly, we will create a conda environment called *transcriber*
-```
-conda create -n transcriber python=3.7.9
-```
-Secondly, we will login to the *transcriber* environment
-```
-conda activate transcriber
+### 1️⃣ Clone the repository  
+```bash
+git clone https://github.com/Harshit4813/Transcriber-App.git
+cd Transcriber-App
 ```
 
-###  Download GitHub repo
+## ⚙️ Setup & Run  
 
-```
-git clone https://github.com/dataprofessor/transcriber-app
-```
 
-###  Pip install libraries
+## 2️⃣ Create a virtual environment
+```bash
+python -m venv .venv
+```
+## 3️⃣ Activate the environment
+
+## ▶ Windows (PowerShell)
+```
+.venv\Scripts\activate
+```
+## ▶ Linux / macOS
+```
+source .venv/bin/activate
+```
+## 4️⃣ Install dependencies
 ```
 pip install -r requirements.txt
 ```
 
-###  Launch the app
-
+## 5️⃣ Run the app
 ```
 streamlit run app.py
 ```
+
+### 👉 Now open http://localhost:8501 in your browser 🎉
+
+## 📂 Project Structure  
+
+- 📜 **app.py** – Main Streamlit app  
+- 🧠 **transcriber.py** – Core transcription logic  
+- 📦 **requirements.txt** – Dependencies  
+- 📘 **README.md** – Project documentation  
+- 🎨 **.streamlit/** – Streamlit configuration (custom CSS)  
+
+
+## 🛠️ Tech Stack  
+
+- 🐍 **Python 3.10+** – Core programming language  
+- 🎨 **Streamlit** – Modern UI framework for interactive web apps  
+- 🎵 **yt-dlp** – Download & process audio from YouTube  
+- 🗣️ **Whisper / Speech Recognition** – AI-powered transcription engine  
+
+# 🎯 Future Roadmap  
+
+- 🌍 Multi-language transcription support  
+- 📝 Speaker diarization (who spoke when)  
+- ☁️ Deploy on **Streamlit Cloud / Hugging Face**  
+- 📊 Interactive transcript editing inside the app  
+
+
+## 🤝 Contributing  
+
+Contributions are welcome!  
+Feel free to **fork** this repo and submit a **pull request** with your improvements. 🚀  
+
+
+
+## 📜 License  
+
+This project is licensed under the **MIT License** – free to use & modify.  
+
+
+
+## ⭐ Support  
+
+If you like this project, don’t forget to **star ⭐ the repo** on GitHub!  
+Your support helps keep the project growing. 💡  
